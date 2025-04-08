@@ -24,6 +24,10 @@ def main():
             description = data_entry.get_description()
             csv.add_entry(
                 date=date, amount=amount, category=category, description=description)
+        elif choice == "2":
+            start_date = data_entry.get_date("Enter start date (dd-mm-yyyy): ")
+            end_date = data_entry.get_date("Enter end date (dd-mm-yyyy): ")
+            csv.get_transactions(start_date, end_date)
         elif choice == "7":
             print("[bold green]Goodbye![/bold green]")
             break
