@@ -1,4 +1,4 @@
-from core import csv_handler, data_entry
+from core import csv_handler, data_entry, plot
 from rich import print
 
 
@@ -8,11 +8,7 @@ def main():
         print("\n[bold cyan]=== Personal Finance Tracker ===[/bold cyan]")
         print("1. Add a new transaction")
         print("2. View transactions and summary")
-        print("3. Check monthly budget")
-        print("4. View category summary")
-        print("5. Plot transactions (line chart)")
-        print("6. Plot monthly trend")
-        print("7. Exit")
+        print("3. Exit")
 
         choice = input("Choose an option (1-7): ")
 
@@ -27,8 +23,11 @@ def main():
         elif choice == "2":
             start_date = data_entry.get_date("Enter start date (dd-mm-yyyy): ")
             end_date = data_entry.get_date("Enter end date (dd-mm-yyyy): ")
-            csv.get_transactions(start_date, end_date)
-        elif choice == "7":
+            df = csv.get_transactions(start_date, end_date)
+
+            if not df.empty and input("Show plot? (y/n): ").lower() == "y":
+                plot.plot_transactions(df=df)
+        elif choice == "3":
             print("[bold green]Goodbye![/bold green]")
             break
         else:
